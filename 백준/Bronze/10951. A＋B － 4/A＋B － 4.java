@@ -14,12 +14,6 @@ public class Main {
 
 		StringBuilder sb = new StringBuilder();
 
-		// while(true) {
-		// 	String[] lines = br.lines().toArray(String[]::new);
-			// line = br.readLine();
-			// System.out.println(Arrays.toString(lines));
-		// }
-		//
 		while((line=br.readLine()) != null) {
 			st = new StringTokenizer(line, " ");
 			if(!st.hasMoreTokens()) break;
