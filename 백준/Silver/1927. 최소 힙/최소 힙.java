@@ -2,7 +2,6 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static StringTokenizer st;
     static int N;
     static PriorityQueue<Integer> pq;
 
