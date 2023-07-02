@@ -1,80 +1,80 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    private final static int[] DX = { 1, 0, -1, 0 };
-    private final static int[] DY = { 0, -1, 0, 1 };
-    private static int[][] map, distance;
-    private static int m, n;
-    private static boolean[][] isVisited;
+    static StringTokenizer st;
+    static int N, M;
+    static int[][] map, ans;
+    static int[] dr = {-1, 0, 1, 0}, dc = {0, 1, 0, -1}, src;
+    static boolean[][] v;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder builder = new StringBuilder();
-        boolean isStartChecked = false;
-        String[] size = reader.readLine().split(" ");
-        n = Integer.parseInt(size[0]);
-        m = Integer.parseInt(size[1]);
-        int startX = -1, startY = -1;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-        map = new int[n][m];
-        distance = new int[n][m];
-        isVisited = new boolean[n][m];
+        map = new int[N][M];
+        ans = new int[N][M];
 
-        for (int i = 0; i < n; i++) {
-            map[i] = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-            if (!isStartChecked)
-                for (int j = 0; j < m; j++)
-                    if (map[i][j] == 2) {
-                        isStartChecked = true;
-                        startX = i;
-                        startY = j;
-                        break;
-                    }
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+
+            for (int j = 0; j < M; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+
+                if (map[i][j] == 2) {
+                    src = new int[]{i, j};
+                }
+            }
         }
 
-        bfs(startX, startY);
+        v = new boolean[N][M];
+        bfs(src);
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++)
-                if (!isVisited[i][j] && map[i][j] == 1)
-                    builder.append(-1 + " ");
-                else
-                    builder.append(distance[i][j] + " ");
-            builder.append("\n");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                sb.append(ans[i][j]).append(" ");
+            }
+            sb.append("\n");
         }
 
-        System.out.print(builder.toString());
+        System.out.println(sb);
     }
 
-    private static void bfs(int x, int y) {
-        Queue<Point> queue = new LinkedList<>();
-        queue.add(new Point(x, y));
-        isVisited[x][y] = true;
+    private static void bfs(int[] src) {
+        Queue<int[]> q = new ArrayDeque<>();
+        q.offer(new int[]{src[0], src[1], 0});
+        v[src[0]][src[1]] = true;
 
-        while (!queue.isEmpty()) {
-            Point current = queue.poll();
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+            ans[cur[0]][cur[1]] = cur[2];
 
-            for (int i = 0; i < 4; i++) {
-                int nextX = current.x + DX[i];
-                int nextY = current.y + DY[i];
+            for (int d = 0; d < 4; d++) {
+                int nr = cur[0] + dr[d];
+                int nc = cur[1] + dc[d];
 
-                if (nextX < 0 || nextY < 0 || nextX >= n || nextY >= m) continue;
-                if (map[nextX][nextY] == 0) continue;
-                if (isVisited[nextX][nextY]) continue;
+                if (!isIn(nr, nc)) continue;
+                if(map[nr][nc] == 0) continue;
+                if (v[nr][nc]) continue;
 
-                queue.add(new Point(nextX, nextY));
-                distance[nextX][nextY] = distance[current.x][current.y] + 1;
-                isVisited[nextX][nextY] = true;
+                v[nr][nc] = true;
+
+                q.offer(new int[] {nr, nc, cur[2] + 1});
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if(v[i][j]) continue;
+                if(map[i][j] == 1 && ans[i][j] == 0) ans[i][j] = -1;
             }
         }
     }
-}
 
-class Point {
-    public int x, y;
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
+    private static boolean isIn(int r, int c) {
+        return (0 <= r && r < N) && (0 <= c && c < M);
     }
 }
