@@ -14,24 +14,23 @@ public class Main {
         map = new HashMap<>();
         S = br.readLine().toCharArray();
 
-        String target = "I";
         for (int i = 0; i < N; i++) {
-            target = target.concat("OI");
+            sb.append("IO");
         }
+        String target = sb.append("I").toString();
         map.put(target, 0);
-        
-        for (int i = 0; i < (N * 2) + 1; i++) {
-            sb.append(S[i]);
-        }
-        map.put(sb.toString(), 1);
+        sb.setLength(0);
 
-        for (int i = (N * 2) + 1; i < M; i++) {
-            sb.deleteCharAt(0);
+        int cnt = 0;
+
+        for (int i = 0; i < M; i++) {
+            if(i >= (N*2)+1) {
+                sb.deleteCharAt(0);
+            }
             sb.append(S[i]);
-            if(map.containsKey(sb.toString())) {
-                map.put(sb.toString(), map.get(sb.toString())+1);
-            } else {
-                map.put(sb.toString(), 1);
+
+            if(sb.toString().equals(target)) {
+                map.put(target, ++ cnt);
             }
         }
 
