@@ -25,11 +25,8 @@ public class Main {
         int result = -1;
         int num = x;
         while (num <= N * M) {
-            int modX = num % N;
-            int modY = num % M;
-
-            if (modX == 0) modX = N;
-            if (modY == 0) modY = M;
+            int modX = (num % N == 0) ? N : num % N;
+            int modY = (num % M == 0) ? M : num % M;
 
             if (modX == x && modY == y) {
                 result = num;
@@ -40,18 +37,4 @@ public class Main {
         }
         return result;
     }
-
-//    private static int getLcm(int n, int m) {
-//        int gcd = 1;
-//        int divisor = 2;
-//        while (divisor <= Math.min(n, m)) {
-//            while (n % divisor == 0 && m % divisor == 0) {
-//                gcd *= divisor;
-//                n /= divisor;
-//                m /= divisor;
-//            }
-//            divisor++;
-//        }
-//        return gcd * n * m;
-//    }
 }
