@@ -29,13 +29,16 @@ public class Main {
             tree[to].add(new int[]{from, weight});
         }
 
+        v = new boolean[N+1];
+        boolean[] v2 = new boolean[N+1];
         for (int i = 1; i <= N; i++) {
             if(isLeaf(tree[i])) {
-                v = new boolean[N+1];
-                v[i] = true;
+                v2[i] = true;
+                v = v2.clone();
                 dfs(i, 0, i);
             }
         }
+
         System.out.println(ans);
     }
 
