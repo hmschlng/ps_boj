@@ -3,7 +3,6 @@ import java.util.*;
 
 public class Main {
     static StringTokenizer st;
-    static int[] dc = {-1,0,1};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
@@ -26,10 +25,6 @@ public class Main {
             min[i][1] = Math.min(min[i-1][0],Math.min(min[i-1][1], min[i-1][2])) + B;
             min[i][2] = Math.min(min[i-1][1],min[i-1][2]) + C;
         }
-
-//        for(int[] a : max) System.out.println(Arrays.toString(a));
-//        System.out.println();
-//        for(int[] a : min) System.out.println(Arrays.toString(a));
 
         System.out.println(Arrays.stream(max[N]).max().getAsInt() + " " + Arrays.stream(min[N]).min().getAsInt());
     }
