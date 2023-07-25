@@ -3,26 +3,21 @@ import java.util.*;
 
 public class Main {
     static int N,M, flipCnt;
-    static boolean[][] m1, m2;
+    static char[][] m1, m2;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        m1 = new boolean[N][M];
-        m2 = new boolean[N][M];
+        m1 = new char[N][M];
+        m2 = new char[N][M];
 
         for (int i = 0; i < N*2; i++) {
-            char[] line = br.readLine().toCharArray();
             if(i >= N) {
-                for (int j = 0; j < M; j++) {
-                    m2[i-N][j] = (line[j] == '1') ? true : false;
-                }
+                m2[i-N] = br.readLine().toCharArray();
             } else {
-                for (int j = 0; j < M; j++) {
-                    m1[i][j] = (line[j] == '1') ? true : false;
-                }
+                m1[i] = br.readLine().toCharArray();
             }
         }
 
@@ -50,7 +45,7 @@ public class Main {
         if(N < 3 || M < 3) return;
         for (int i = r; i < r+3; i++) {
             for (int j = c; j < c+3; j++) {
-                m1[i][j] = !m1[i][j];
+                m1[i][j] = (char)('1' - (m1[i][j] - '0'));
             }
         }
     }
