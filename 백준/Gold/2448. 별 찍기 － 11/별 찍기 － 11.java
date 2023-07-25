@@ -2,19 +2,18 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static StringBuilder sb;
     static String[] star = {"  *  ", " * * ", "*****"};
     static char[][] result;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        sb = new StringBuilder();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
 
         if(N == 3) {
-            System.out.println(star[0]);
-            System.out.println(star[1]);
-            System.out.println(star[2]);
+            bw.write(star[0] + "\n");
+            bw.write(star[1] + "\n");
+            bw.write(star[2] + "\n");
         }
         else {
             result = new char[N][2*N];
@@ -24,12 +23,15 @@ public class Main {
 
             printStar(0,0, N);
 
-            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < N; i++) {
-                sb.append(result[i]).append("\n");
+                bw.write(result[i]);
+                bw.write("\n");
             }
-            System.out.print(sb);
         }
+        bw.flush();
+
+        br.close();
+        bw.close();
     }
 
     public static void printStar(int r, int c, int depth) {
